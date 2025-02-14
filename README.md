@@ -1,1 +1,1 @@
-For access denied solution: icacls "users.csv" /grant Everyone:F /T
+For access denied: icacls "users.csv" /grant Everyone:F /T
