@@ -35,7 +35,7 @@ client.connect()
   .then(() => console.log('Connected to PostgreSQL!'))
   .catch(err => console.error('Connection error', err.stack));
 
-// Middleware
+// Middleware [to add routes}
 app.use(router);
 
 // Start server
