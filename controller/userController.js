@@ -1,4 +1,9 @@
 import { UserModel } from "../postgres/postgres.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const getAllUser = async (req, res) => {
     try {
