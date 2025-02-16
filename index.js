@@ -19,6 +19,7 @@ import express from 'express';
 import pkg from 'pg';
 import { connection } from './postgres/postgres.js'; 
 import router from './view/routes.js';
+import cors from 'cors';
 
 const { Client } = pkg;
 const app = express();
@@ -26,6 +27,8 @@ const PORT = 8000;
 
 // Middleware [to add routes]
 app.use(router);
+app.use(express.json());
+app.use(cors());
 
 // Start server
 app.listen(PORT, () => {
