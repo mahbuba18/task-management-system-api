@@ -3,6 +3,7 @@ Task Management System API
 Overview:
 
 The Task Management System API is a RESTful API built with Node.js, Express, Sequelize, and PostgreSQL. It allows users to manage tasks, projects, and assignments efficiently.
+Diagram:![alt text](TMS.drawio.png)
 
 Features:
 
