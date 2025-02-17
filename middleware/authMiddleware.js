@@ -1,18 +1,18 @@
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
+import { getUser } from "../config/auth.js";
 
-dotenv.config();
-
-export const authMiddleware = (req, res, next) => {
+export function authenticateUser(req, res, next) {
   const token = req.header("Authorization");
 
-  if (!token) return res.status(401).json({ error: "Access Denied" });
-
-  try {
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = verified; // Store user details in request object
-    next();
-  } catch (err) {
-    res.status(400).json({ error: "Invalid Token" });
+  if (!token) {
+    return res.status(401).json({ error: "Access Denied: No Token Provided" });
   }
-};
+
+  const user = getUser(token.replace("Bearer ", ""));
+
+  if (!user) {
+    return res.status(403).json({ error: "Invalid Token" });
+  }
+
+  req.user = user; // Attach user data to the request
+  next();
+}

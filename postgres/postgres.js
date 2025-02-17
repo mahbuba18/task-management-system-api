@@ -1,56 +1,30 @@
-// import { Sequelize} from 'sequelize';
-// import { createUserModel } from '../model/userSchema.js';
+import { Sequelize } from "sequelize";
+import dotenv from "dotenv";
+import { createUserModel } from "../model/userSchema.js";
 
 
-// const sequelize = new Sequelize('', 'root', '', {
-//     host: 'localhost',
-//     dialect:  'postgres'
-//   });
+dotenv.config();
 
-//  let UserModel=null; 
-
-// const connection=async()=>{
-//     try {
-//         await sequelize.authenticate();
-//         console.log('Connection has been established successfully.');
-        
-//         UserModel= await createUserModel(sequelize );
-//         await sequelize.sync( );
-//         console.log("Database Synced")
-//       } catch (error) {
-//         console.error('Unable to connect to the database:', error);
-//       }
-
-// }
-
-
-// export{
-//     connection,
-//     UserModel
-// }
-import { Sequelize } from 'sequelize';
-import { createUserModel } from '../model/userSchema.js';
-
-const sequelize = new Sequelize('postgres://postgres:priya@localhost:5432/task_manager', {
-  dialect: 'postgres',
-  host: 'localhost'
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
+  host: process.env.DB_HOST,
+  dialect: "postgres",
+  logging: false,
 });
+
 let UserModel = null;
 
 const connection = async () => {
-    try {
-        await sequelize.authenticate();
-        console.log('Connection has been established successfully.');
+  try {
+    await sequelize.authenticate();
+    console.log("Database connected successfully.");
 
-        // Initialize the User model
-        UserModel = await createUserModel(sequelize);
-        await sequelize.sync(); // Syncing the model with the database
-        console.log("Database Synced");
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-    }
+    // Initialize and sync User model
+    UserModel = await createUserModel(sequelize);
+    await sequelize.sync();
+    console.log("Database Synced.");
+  } catch (error) {
+    console.error("Database connection error:", error);
+  }
 };
-export { 
-    connection, 
-    UserModel 
-};
+
+export { connection, UserModel };

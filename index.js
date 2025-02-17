@@ -1,63 +1,18 @@
-// import express from 'express';
-// import { connection } from './postgres/postgres.js';
-// import router from './view/routes.js';
-
-// const app= express();
-// const PORT = 8000; 
-
-// //middleware
-// app.use(router);
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import { connection } from "./postgres/postgres.js";
+import routes from "./view/routes.js";
 
 
-// app.listen(PORT,()=>{
-//   console.log(`Server is running at PORT ${PORT}`)
-// })
-
-// connection();
-
-import express from 'express';
-import pkg from 'pg';
-import { connection } from './postgres/postgres.js'; 
-import router from './view/routes.js';
-import cors from 'cors';
-
-const { Client } = pkg;
+dotenv.config();
 const app = express();
-const PORT = 8000;
 
-// Middleware [to add routes]
-app.use(router);
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
+app.use("/api", routes);
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`Server is running at PORT ${PORT}`);
-});
+connection(); // Connect to the database
 
-// Database connection using pg client
-const client = new Client({
-  host: 'localhost',
-  port: 5432,
-  user: 'postgres',
-  password: 'priya',
-  database: 'task_manager'
-});
-
-client.connect()
-  .then(() => console.log('Connected to PostgreSQL using pg client!'))
-  .catch(err => console.error('Connection error', err.stack));
-
-// Initialize Sequelize connection and models
-connection().then(() => {
-    console.log("Sequelize models are initialized.");
-}).catch(err => {
-    console.error("Error initializing Sequelize:", err);
-});
-
-// Optionally, close the connection on shutdown
-process.on('SIGINT', async () => {
-  await client.end();
-  console.log('PostgreSQL connection closed.');
-  process.exit();
-});
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
