@@ -1,12 +1,10 @@
-For access denied: icacls "users.csv" /grant Everyone:F /T
+Task Management System API
 
-#Task Management System API
-
-Overview
+Overview:
 
 The Task Management System API is a RESTful API built with Node.js, Express, Sequelize, and PostgreSQL. It allows users to manage tasks, projects, and assignments efficiently.
 
-Features
+Features:
 
 User authentication (JWT-based login & registration)
 
@@ -18,7 +16,7 @@ Comments on tasks
 
 Task prioritization and status management
 
-Technologies Used
+Technologies Used:
 
 Node.js (Runtime environment)
 
@@ -34,9 +32,9 @@ bcrypt (Password hashing)
 
 Nodemon (Development auto-restart tool)
 
-Installation & Setup
+Installation & Setup:
 
-Prerequisites
+Prerequisites:
 
 Node.js & npm installed
 
@@ -55,12 +53,12 @@ Configure Environment Variables
 
 Create a .env file in the root directory and add:
 
-PORT=5000
+[PORT=5000
 DB_HOST=localhost
 DB_USER=your_username
 DB_PASSWORD=your_password
 DB_NAME=task_management_db
-JWT_SECRET=your_jwt_secret
+JWT_SECRET=your_jwt_secret]
 
 Run Database Migrations
 
@@ -109,7 +107,6 @@ GET
 Get all users
 
 GET
-
 /users/:id
 
 Get a single user
