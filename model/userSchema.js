@@ -28,7 +28,7 @@ export const createUserModel = async (sequelize) => {
     },
     {
       tableName: "users",
-      timestamps: true,
+      timestamps: false, // Disable timestamps if you don't want createdAt and updatedAt
     }
   );
 

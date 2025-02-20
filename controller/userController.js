@@ -6,9 +6,9 @@ import { setUser } from "../config/auth.js";
 // Get all users
 export const getAllUser = async (req, res) => {
   try {
-    const users = await UserModel.findAll();
-    if (users.length === 0) return res.status(200).json({ message: "No users found" });
-    return res.status(200).json(users);
+    const user = await UserModel.findAll();
+    if (user.length === 0) return res.status(200).json({ message: "No users found" });
+    return res.status(200).json(user);
   } catch (error) {
     return res.status(500).json({ error: "Internal server error" });
   }
@@ -40,17 +40,22 @@ export const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await UserModel.findOne({ where: { email } });
+    console.log(user);
     if (!user) return res.status(404).json({ error: "User not found" });
 
-    const isValid = await bcrypt.compare(password, user.password_hash);
-    if (!isValid) return res.status(401).json({ error: "Invalid password" });
+    // Compare the plain text password
+    if (password !== user.password_hash) {
+      return res.status(401).json({ error: "Invalid password" });
+    }
 
+    // Assuming setUser generates a token for the user
     const token = setUser(user);
     res.status(200).json({ message: "Login successful", token });
   } catch (error) {
+    console.error(error);  // Log error for debugging
     res.status(500).json({ error: "Internal Server Error" });
   }
-};
+}
 
 // Update user
 export const updateUser = async (req, res) => {
