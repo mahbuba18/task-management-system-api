@@ -57,6 +57,16 @@ export const loginUser = async (req, res) => {
   }
 }
 
+// Logout user
+export const logoutUser = async (req, res) => {
+  try {
+    return res.status(200).json({ message: "Logout successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 // Update user
 export const updateUser = async (req, res) => {
   const userId = req.params.userId;
